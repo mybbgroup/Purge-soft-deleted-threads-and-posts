@@ -1,13 +1,32 @@
 <?php
 
-/**
- *	Purge soft deleted posts and threads
- *
- *	@author Eldenroot <http://community.mybb.com/user-84065.html>
- *	@GitHub <https://github.com/Cu8eR/MyBB_Purge-soft-deleted-threads-and-posts>
- *	@version 1.0
+ /**
+ * MyBB Purge soft deleted posts and threads - plugin for MyBB 1.8.x forum software
+ * 
+ * @package MyBB Plugin
+ * @author MyBB Group - Eldenroot - <eldenroot@gmail.com>
+ * @copyright 2018 MyBB Group <http://mybb.group>
+ * @link <https://github.com/mybbgroup/MyBB_Purge-soft-deleted-threads-and-posts>
+ * @license GPL-3.0
+ * 
  */
-
+  
+/**
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
 // Disallow direct access to this file for security reasons
 if(!defined("IN_MYBB"))
 {
