@@ -42,7 +42,7 @@ function purgesoftdeleted_info()
         "website"       => "https://github.com/mybbgroup/MyBB_Purge-soft-deleted-threads-and-posts",
         "author"        => "MyBB Group (Eldenroot)",
         "authorsite"    => "https://github.com/mybbgroup/MyBB_Purge-soft-deleted-threads-and-posts",
-        "version"       => "1.0.0",
+        "version"       => "1.0.1",
         "codename"      => "purgesoftdeleted",
         "compatibility" => "18*"
     );
