@@ -5,7 +5,7 @@
  *
  * @package MyBB Plugin
  * @author MyBB Group - Eldenroot - <eldenroot@gmail.com>
- * @copyright 2018 MyBB Group <http://mybb.group>
+ * @copyright 2021 MyBB Group <http://mybb.group>
  * @link <https://github.com/mybbgroup/MyBB_Purge-soft-deleted-threads-and-posts>
  * @license GPL-3.0
  *
@@ -36,37 +36,19 @@ if(!defined("IN_MYBB"))
 // Purge soft deleted
 function task_purgesoftdeleted($task)
 {
-    global $db;
+    global $db, $lang;
+    $lang->load("config_purgesoftdeleted");
 
     // Soft deleted posts and threads older than x seconds will be purged
     $ptime = 3*24*3600; // 3 days for soft deleted posts
     $ttime = 5*24*3600; // 5 days for soft deleted threads
 
-    if ($db->delete_query("posts", "(visible = -1) AND (dateline < ".(TIME_NOW-$ptime).")"))
-    {
-        add_task_log($task, "Soft deleted posts were purged successfully!");
-    }
-    else
-    {
-        add_task_log($task, "Something went wrong while cleaning up the soft deleted posts...");
-    }
+    $db->delete_query("posts", "(visible = -1) AND (dateline < ".(TIME_NOW-$ptime).")");
 
-    if($db->delete_query("threads", "(visible = -1) AND (dateline < ".(TIME_NOW-$ttime).")"))
-    {
-        add_task_log($task, "Soft deleted threads were purged successfully!");
-    }
-    else
-    {
-        add_task_log($task, "Something went wrong while cleaning up the soft deleted threads...");
-    }
+    $db->delete_query("threads", "(visible = -1) AND (dateline < ".(TIME_NOW-$ttime).")");
 
     // Optimize DB table
-    if($db->query("OPTIMIZE TABLE `".TABLE_PREFIX."posts`, `".TABLE_PREFIX."threads`, `".TABLE_PREFIX."reportedcontent`"))
-    {
-        add_task_log($task, "Purge soft deleted - posts/threads tables were optimized successfully!");
-    }
-    else
-    {
-        add_task_log($task, "Purge soft deleted - posts/threads tables were NOT optimized! Something went wrong...");
-    }
+    $db->query("OPTIMIZE TABLE `".TABLE_PREFIX."posts`, `".TABLE_PREFIX."threads`, `".TABLE_PREFIX."reportedcontent`");
+	
+    add_task_log($task, $lang->purgesoftdeleted_task_log);
 }

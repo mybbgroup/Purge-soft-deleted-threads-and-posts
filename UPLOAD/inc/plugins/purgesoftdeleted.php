@@ -5,7 +5,7 @@
  * 
  * @package MyBB Plugin
  * @author MyBB Group - Eldenroot - <eldenroot@gmail.com>
- * @copyright 2018 MyBB Group <http://mybb.group>
+ * @copyright 2021 MyBB Group <http://mybb.group>
  * @link <https://github.com/mybbgroup/MyBB_Purge-soft-deleted-threads-and-posts>
  * @license GPL-3.0
  * 
@@ -36,13 +36,16 @@ if(!defined("IN_MYBB"))
 // Plugin info
 function purgesoftdeleted_info()
 {
+	global $lang;
+    $lang->load("config_purgesoftdeleted");
+	
     return array(
-        "name"          => "Purge soft deleted posts and threads",
-        "description"   => "Automatically purges soft deleted posts and threads",
+        "name"          => $lang->purgesoftdeleted_name,
+        "description"   => $lang->purgesoftdeleted_desc,
         "website"       => "https://github.com/mybbgroup/MyBB_Purge-soft-deleted-threads-and-posts",
         "author"        => "MyBB Group (Eldenroot)",
         "authorsite"    => "https://github.com/mybbgroup/MyBB_Purge-soft-deleted-threads-and-posts",
-        "version"       => "1.0.1",
+        "version"       => "1.1.0",
         "codename"      => "purgesoftdeleted",
         "compatibility" => "18*"
     );
@@ -51,7 +54,8 @@ function purgesoftdeleted_info()
 // Plugin activate
 function purgesoftdeleted_activate()
 {
-	global $db, $cache;
+	global $db, $cache, $lang;
+	$lang->load("config_purgesoftdeleted");
 	
 		// Create task - Purge soft deleted
 		// Have we already added this task?
@@ -63,8 +67,8 @@ function purgesoftdeleted_activate()
 				
 				// If not then add
 					$new_task = array(
-						"title" => "Purge soft deleted posts and threads",
-						"description" => "Checks for soft deleted posts and threads and purges them automatically.",
+						"title" => $db->escape_string($lang->purgesoftdeleted_task_name),
+						"description" => $db->escape_string($lang->purgesoftdeleted_task_desc)
 						"file" => "purgesoftdeleted",
 						"minute" => '2',
 						"hour" => '0',
@@ -87,11 +91,11 @@ function purgesoftdeleted_activate()
 // Plugin deactivate
 function purgesoftdeleted_deactivate()
 {
-	global $db, $mybb;
+	global $db, $cache;
     
-		// Remove task from task manager
-			$db->delete_query('tasks', 'file=\'purgesoftdeleted\''); // Delete Purge soft deleted task
+	// Remove task from task manager
+	$db->delete_query('tasks', 'file=\'purgesoftdeleted\''); // Delete Purge soft deleted task
 	
-		// Rebuild settings
-			rebuild_settings();
+	// Update taks cache
+	$cache->update_tasks();
 }
