@@ -68,7 +68,7 @@ function purgesoftdeleted_activate()
 				// If not then add
 					$new_task = array(
 						"title" => $db->escape_string($lang->purgesoftdeleted_task_name),
-						"description" => $db->escape_string($lang->purgesoftdeleted_task_desc)
+						"description" => $db->escape_string($lang->purgesoftdeleted_task_desc),
 						"file" => "purgesoftdeleted",
 						"minute" => '2',
 						"hour" => '0',
