@@ -2,13 +2,13 @@
 
 /**
  * MyBB Purge soft deleted posts and threads - plugin for MyBB 1.8.x forum software
- *
+ * 
  * @package MyBB Plugin
  * @author MyBB Group - Eldenroot - <eldenroot@gmail.com>
- * @copyright 2021 MyBB Group <http://mybb.group>
+ * @copyright 2021 MyBB Group <https://mybb.group>
  * @link <https://github.com/mybbgroup/MyBB_Purge-soft-deleted-threads-and-posts>
  * @license GPL-3.0
- *
+ * 
  */
 
 /**

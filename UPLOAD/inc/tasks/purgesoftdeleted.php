@@ -5,7 +5,7 @@
  *
  * @package MyBB Plugin
  * @author MyBB Group - Eldenroot - <eldenroot@gmail.com>
- * @copyright 2021 MyBB Group <http://mybb.group>
+ * @copyright 2021 MyBB Group <https://mybb.group>
  * @link <https://github.com/mybbgroup/MyBB_Purge-soft-deleted-threads-and-posts>
  * @license GPL-3.0
  *
@@ -36,7 +36,12 @@ if (!defined("IN_MYBB")) {
 function task_purgesoftdeleted($task)
 {
     global $db, $lang;
-    $lang->load("config_purgesoftdeleted");
+    
+    if (defined("IN_ADMINCP")) {
+        $lang->load("config_purgesoftdeleted");
+    } else {
+        $lang->load("purgesoftdeleted");
+    }
     
     // Soft deleted posts and threads older than x seconds will be purged
     $ptime = 3 * 24 * 3600; // 3 days for soft deleted posts
@@ -48,6 +53,7 @@ function task_purgesoftdeleted($task)
     
     // Optimize DB table
     $db->query("OPTIMIZE TABLE `" . TABLE_PREFIX . "posts`, `" . TABLE_PREFIX . "threads`, `" . TABLE_PREFIX . "reportedcontent`");
+    
     
     add_task_log($task, $lang->purgesoftdeleted_task_log);
 }
