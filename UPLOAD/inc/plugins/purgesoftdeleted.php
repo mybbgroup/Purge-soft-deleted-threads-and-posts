@@ -96,6 +96,6 @@ function purgesoftdeleted_deactivate()
     // Remove task from task manager
     $db->delete_query('tasks', 'file=\'purgesoftdeleted\''); // Delete Purge soft deleted task
     
-    // Update taks cache
+    // Update task cache
     $cache->update_tasks();
 }

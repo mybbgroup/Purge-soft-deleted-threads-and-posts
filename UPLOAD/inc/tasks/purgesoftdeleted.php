@@ -37,10 +37,8 @@ function task_purgesoftdeleted($task)
 {
     global $db, $lang;
     
-    if (defined("IN_ADMINCP")) {
+    defined("IN_ADMINCP") {
         $lang->load("config_purgesoftdeleted");
-    } else {
-        $lang->load("purgesoftdeleted");
     }
     
     // Soft deleted posts and threads older than x seconds will be purged
@@ -48,12 +46,10 @@ function task_purgesoftdeleted($task)
     $ttime = 5 * 24 * 3600; // 5 days for soft deleted threads
     
     $db->delete_query("posts", "(visible = -1) AND (dateline < " . (TIME_NOW - $ptime) . ")");
-    
     $db->delete_query("threads", "(visible = -1) AND (dateline < " . (TIME_NOW - $ttime) . ")");
     
-    // Optimize DB table
+    // Optimise DB table
     $db->query("OPTIMIZE TABLE `" . TABLE_PREFIX . "posts`, `" . TABLE_PREFIX . "threads`, `" . TABLE_PREFIX . "reportedcontent`");
-    
     
     add_task_log($task, $lang->purgesoftdeleted_task_log);
 }
